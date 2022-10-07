@@ -1,0 +1,606 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex:2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style><title>RTKLIB用于实时GNSS数据采集手册1</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='rtklib用于实时gnss数据采集手册'><span>RTKLIB用于实时GNSS数据采集手册</span></h1><p><strong><span>应用场景</span></strong></p><ul><li><span>静态短基线解算（大坝、桥梁、滑坡等形变监测）</span></li><li><span>动态后处理差分（PPK，无人机遥感或倾斜摄影测量等）</span></li><li><span>实时动态差分（RTK、必须立马出结果）</span></li><li><span>实时精密单点定位（PPP，海洋上）</span></li></ul><h2 id='一rtkpoltexe'><span>一、RTKPOLT.exe</span></h2><p><span>RTKPLOT模块用于使用图像或者图表的方式分析定位解算的水平，我们可以点击rtkplot可执行文件使用该功能，也可以在rtkpost和rtknavi模块中点击plot进入。其界面如下：</span></p><p><img src="C:\Users\孤泉冷月\AppData\Roaming\Typora\typora-user-images\image-20220923104118266.png" alt="image-20220923104118266" style="zoom: 50%;" /></p><p><span>点击File菜单下的opensolution选项可以加载要显示的解算结果，可以选择rtklib数据处理输出的文件也可以选择NMEA-0183格式的文件。如果文件为空那么会显示接收机地面跟踪轨迹图像。跟踪轨迹的线条、颜色可通过edit选项进行更改。在窗口的下方会显示解算历元的个数、基线长度等信息。</span></p><p><img src="Image/image-20220923105432640.png" alt="image-20220923105432640" style="zoom:50%;" /></p><p><span>点击file菜单下的open map image选项我们可以打开一个图片作为gnd trk图像的背景。图像可以通过edit菜单进行设置以适应窗口。</span></p><p><span>                        </span><img src="Image/image-20220923105716262.png" alt="image-20220923105716262" style="zoom:50%;" /><img src="Image/image-20220923105953109.png" alt="image-20220923105953109" style="zoom: 50%;" /></p><p><span>菜单栏中的第一个下选框用来选择图像的类型，包含：轨迹跟踪图，接收机坐标在E/N/U方向的分量，接收机速度和加速度在E/N/U方向的分量，在这些图像上，我们滚动鼠标滚轮可以改变坐标系的尺度，还可以选择是否显示跟踪轨迹，坐标系中心及地图的网格线。</span></p><p><span>                        </span><img src="Image/image-20220923110338686.png" alt="image-20220923110338686" style="zoom:50%;" /><img src="Image/image-20220923110514949.png" alt="image-20220923110514949" style="zoom:50%;" /></p><p>&nbsp;</p><h2 id='二rtkconvexe'><span>二、RTKCONV.exe</span></h2><p><strong><span>功能：数据转换</span></strong></p><p><span>采集原始的接收机观测数据，通过rtkconv将数据转换为我们通用的</span><strong><span>Rinex</span></strong><span>格式（RINEX OBS(观测数据)、RINEX</span>
+<span>NAV (GNSS导航消息)），便可进行两种模式处理，一是相对定位，即求取两个点的相对位置，二是精密单点定位（ppp）。</span></p><p><strong><span>1、主界面</span></strong><span>:</span></p><p><img src="Image/image-20220923154617926.png" alt="image-20220923154617926" style="zoom:67%;" /></p><p><strong><span>介绍：</span></strong></p><ul><li><span>标记1：设置时间，区间在采集开始到采集结束这个时间段。（默认）；interval：设置采样率（默认）</span></li><li><span>标记2：表示需要转换的接收机观测数据（Rover流动站）</span></li><li><span>标记3：表示流动站采集的数据类型。rtcm2、rtcm3、novatel oem3,4,6,7、u-blox、trimble rt17、……</span></li><li><span>标记4：表示转换后的数据类型：常用的是（</span><em><span>*.obs</span></em><span>或者</span><em><span>.o）,（</span></em><span>.nav），也是定位解算常用的文件。转换输出路径可自定义。</span></li></ul><p><strong><span>2、option转换设置界面：</span></strong></p><p><img src="Image/image-20220923161701100.png" alt="image-20220923161701100" style="zoom:67%;" /></p><p><strong><span>介绍：（设置头文件，了解一下O文件格式就清楚了）</span></strong></p><ul><li><p><span>rinex版本：就是转换后的rinex版本，2.10、2.11、2.12、3.01、3.02、3.03，目前支持到3.04了。</span></p></li><li><p><span>中间部分：这部分主要是设置一些基本信息，包括，制作机构，天线类型，版本啥的，不重要。</span></p></li><li><p><span>Approx pos XYZ：站点近似坐标。</span></p></li><li><p><span>Antnna Delta H/E/N：天线相位中心偏差</span></p></li><li><p><span>各项改正、周跳：是否加入电离层、时间改正、周跳跳等码信息。</span></p></li><li><p><span>输出的卫星系统：常用四个</span></p></li><li><p><span>Exclude satellites：排除一些不需要的卫星号，比如G30，G21、……</span></p></li><li><p><span>观测值类型：伪距C、载波L、多普勒D、信噪比S</span></p></li><li><p><span>GNSS Signals：载波通道</span></p></li><li><p><span>Signal Mask：信号通道，一般是全选状态，可以根据自己需要选择。如果不知道可以从IGS下载观测文件看一下有哪些信号频道</span></p><p><img src="Image/image-20220923211451128.png" alt="image-20220923211451128" style="zoom: 50%;" /></p></li></ul><p><strong><span>3、设置完成后，点击convert，开始转换</span></strong></p><p><img src="Image/image-20220923211833310.png" alt="image-20220923211833310" style="zoom: 80%;" /></p><p><strong><span>案例实现</span></strong></p><p><span>（1）分别将Physical base station.dat、UAV.bin、Virtual base station.rtcm3三个文件转换为通用的rinex格式。</span></p><p><img src="Image/image-20220923212154960.png" alt="image-20220923212154960" style="zoom:50%;" /></p><p><span>（2）设置参数，分别转换。</span></p><p><span>  </span><img src="Image/image-20220923212621821.png" alt="image-20220923212621821" style="zoom:50%;" /><img src="Image/image-20220923213203128.png" alt="image-20220923213203128" style="zoom: 67%;" /></p><p><img src="Image/image-20220923213308327.png" alt="image-20220923213308327" style="zoom: 50%;" /></p><p><span>（3）查看转换结果</span></p><p><img src="Image/image-20220923213449401.png" alt="image-20220923213449401" style="zoom:50%;" /></p><p>&nbsp;</p><h2 id='三rtknaviexe'><span>三、RTKNAVI.exe</span></h2><p><strong><span>功能</span></strong></p><p><span>实时定位解算。应用程序RTKNAVI，必须输入原始观测数据（.obs/.o）、导航电文（.nav）才能够进行实时处理。设置定位模式为Kinematic ,并将基准站和移动站数据输入到RTKNAVI，将会进行整周模糊度解算，并输出高质量的定位结果。</span></p><p><strong><span>1、主界面</span></strong></p><p><span>                                       </span><img src="Image/image-20220923220557673.png" alt="image-20220923220557673" style="zoom: 50%;" /></p><p><img src="Image/image-20220923221042872.png" alt="image-20220923221042872" style="zoom:50%;" /></p><p><img src="Image/image-20220924082851012.png" alt="image-20220924082851012" style="zoom:50%;" /></p><p><strong><span>介绍：</span></strong></p><ul><li><p><span>标记1：切换显示时间（GPST、UTC、LT）</span></p></li><li><p><span>标记2，4，5：输入流（后面详解）、输出流、日志流</span></p></li><li><p><span>标记3：状态显示</span></p><p><span>         </span><strong><span>-   Gray/灰色</span></strong><span>：代表不能用；</span></p><p><span>        </span><strong><span>-   Orange/橙色</span></strong><span>：代表等待连接；</span></p><p><span>        </span><strong><span>-   Deep-Green/深绿色</span></strong><span>：代表连接、正在运行；</span></p><p><span>        </span><strong><span>-   Light-Green/亮绿色</span></strong><span>： 代表数据激活；</span></p><p><span>       </span><strong><span>-   Red/红色</span></strong><span>：代表通信错误；</span></p></li></ul><p><strong><span>2、输入流设置</span></strong></p><p><img src="Image/image-20220923222240199.png" alt="image-20220923222240199" style="zoom:67%;" /></p><p><span>（1）为每一个“流”进行配置，如果只是</span><strong><span>单点定位</span></strong><span>，只需要配置“Rover”即可。数据流的类型/来源：</span></p><ul><li><span>Serial：通过RS232C或USB接入rtknavi；</span></li><li><span>TCP Client：通过TCP协议，连接TCP Server；TCP Server将数据送给RTKLIB；</span></li><li><span>TCP Server：通过TCP协议，RTKLIB拿TCP Client的数据；</span></li><li><span>Ntrip Client：通过NTRIP协议，连接Ntrip Caster;</span></li><li><span>File：通过记录文件输入RTKLIB；</span></li><li><span>FTP：仅支持Correction, 通过FTP下载输入，导入RTKLIB；</span></li><li><span>FTTP：仅支持Correction, 通过FTTP下载输入，导入RTKLIB；</span></li></ul><p><span>（2）流类型中的Opt：ʺTCP Clientʺ or ʺTCP Serverʺ</span></p><p><img src="Image/image-20220923222905660.png" alt="image-20220923222905660" style="zoom:67%;" /></p><p><span>（3）流类型中的Opt：ʺNTRIP Clientʺ</span></p><p><span>需要配置：NTRIP Caster Host、Port、 Mount‐point、User‐ID、Password；配置好后点击“Browse”可以浏览查询结</span></p><p><span>               </span><img src="Image/image-20220923223254255.png" alt="image-20220923223254255" style="zoom: 50%;" /><span>  </span><img src="Image/image-20220923223513677.png" alt="image-20220923223513677" style="zoom: 50%;" /></p><p><span>（4）如果基准站（Base Station）为以下服务类型：“serial”、&quot;Tcp Client&quot;、&quot;Tcp Server&quot;、&quot;Ntrip Client&quot;；需要选择“Transmit NMEA GPGGA to Base Station”。有两种发送移动站坐标到基准站的方式：</span></p><ul><li><span>1、如果知道当前移动站的坐标，选择“Latitude/Longitude”，手动输入坐标（经纬高）</span></li><li><span>2、选择“Single Solution”，将移动站坐标传送到基准站，不要输入。</span></li></ul><p><span>注意：负号表示南纬、西经。</span></p><p><img src="Image/image-20220923224023357.png" alt="image-20220923224023357" style="zoom:50%;" /></p><p><strong><span>3、options界面</span></strong><span>（rtkpost和rtknavi的options是一样的）</span></p><p><img src="Image/image-20220923224619905.png" alt="image-20220923224619905" style="zoom: 67%;" /></p><p><span>各项参数介绍：</span></p><p><strong><span>Setting1</span></strong></p><p><img src="Image/image-20220923232346231.png" alt="image-20220923232346231" style="zoom: 67%;" /></p><figure><table><thead><tr><th style='text-align:left;' ><span>参数</span></th><th><span>含义</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>Positioning Mode（定位模式）</span></td><td><span>主要分为两种定位模式，一种是相对定位，需要两个测站的数据；一种是精密单点定位PPP。  ①Single（伪距单点定位）  ②DGPS/DGNSS（伪距差分/伪距相对定位）  ③Kinematic（基于载体的动态定位）  ④Static（基于载波的静态定位）  ⑤Moving-Base（移动基线）  ⑥Fixed（约束坐标）  ⑦PPP Kinematic/Static/Fixed（精密单点定位动态/静态/定位）</span></td></tr><tr><td style='text-align:left;' ><span>Frequencies（频率）</span></td><td><span>单频、双频、三频</span></td></tr><tr><td style='text-align:left;' ><span>Filter Type（滤波类型）</span></td><td><span>①Forward（从前往后处理）  ②Backward（从后往前处理）  ③Combined（先从前往后，再从后往前处理）  ④Combined-no phase reset（无相位重置）   “Backward”从后往前处理可以保证起始时间阶段有高精度的解算结果，  “Combined”先从前往后，再从后往前，再按照一定运算规则取终值。</span></td></tr><tr><td style='text-align:left;' ><span>Elevation Mask/  SNR Mask  </span><br><span>（卫星截止高度角）/（信噪比模板）</span></td><td><span>一般在卫星数多（&gt;10）的情况下选15°，因为低高度角的卫星，质量不能保证，会影响定位解算精度。信噪比模板一般不做设置。</span></td></tr><tr><td style='text-align:left;' ><span>Rec Dynamics（接收机动力学模型）</span></td><td><span>接收机动态点“ON”，他会估计一个速度和加速度参数，如果是“OFF”，就只会估算静态的坐标参数。地球潮汐校正，在处理PPP的时候需要设置。</span></td></tr><tr><td style='text-align:left;' ><span>Earth Tides  Correction(地球潮汐改正)</span></td><td><span>①OFF（不应用）  ②Solid（固体潮汐改正）  ③Solid/OTL（固体潮汐改正、海潮荷载、极潮修正）</span></td></tr><tr><td style='text-align:left;' ><span>Ionosphere  Correction（电离层改正）</span></td><td><span>①OFF（不应用）  ②Broadcast（广播电离层模型）  ③SBAS（SBAS电离层模型）  ④Iono-Free LC（无电离层线性组合，具有双频（GPS/GLONASS/QZSS的L1-L2或伽利略的L1-L5测量用于电离层校正）  ⑤Estimate TEC（电离层参数估计）  ⑥IONEX TEC（使用IONEX TEC网格数据）  ⑦QZSS Broadcast（应用QZSS提供的广播电离层模型）</span></td></tr><tr><td style='text-align:left;' ><span>Troposphere  Correction（对流层改正）</span></td><td><span>①OFF（不应用）  ②Saastamoinen（模型）  ③SBAS（应用SBAS对流层模型）  ③Estimate ZTD将ZTD（天顶总延迟）参数估计为EKF状态  ④Estimate ZTD+Grad将ZTD和水平梯度参数估计为EKF状态</span></td></tr><tr><td style='text-align:left;' ><span>Satellite  Ephemeris/Clock（卫星星历/时钟）</span></td><td><span>①Broadcast（广播星历）  ②Precise（精密星历）  ③Broadcast+SBAS（具有SBAS长期快速校正的广播星历）  ④Broadcast+SSR APC（带RTCM SSR校正的广播星历（天线相位中心值））  ⑤Broadcast+SSR CoM（带RTCM SSR校正的广播星历（卫星质心值））</span></td></tr><tr><td style='text-align:left;' ><span>Sat PCV（卫星天线PCV-相位中心变化模型）</span></td><td><span>Rec PCV：设置是否使用接收器天线PCV型号  PhWU：设置是否应用PPP模式的相位结束校正  Rej Ed：设置是否排除eclipse中的GPS  Block IIA卫星。由于偏航姿态的不可预测行为，日蚀Block IIA卫星通常会降低PPP解决方案的性能。  RAIM FDE：设置是否启用RAIM（接收器自主完整性监视）FDE（故障检测和排除）功能</span></td></tr></tbody></table></figure><p><strong><span>Setting2</span></strong></p><p><img src="Image/image-20220923232407239.png" alt="image-20220923232407239" style="zoom:67%;" /></p><figure><table><thead><tr><th style='text-align:center;' ><span>参数</span></th><th style='text-align:center;' ><span>含义</span></th></tr></thead><tbody><tr><td style='text-align:center;' ><span>Solution Format</span></td><td style='text-align:center;' ><span>方案格式</span></td></tr><tr><td style='text-align:center;' ><span>Output Header / Proc. Options / Velodity</span></td><td style='text-align:center;' ><span>输出标头/proc选项/速度</span></td></tr><tr><td style='text-align:center;' ><span>Time Format/ # of Decimals</span></td><td style='text-align:center;' ><span>时间格式/小数的#</span></td></tr><tr><td style='text-align:center;' ><span>Latitude Longitude Format / Field Separator</span></td><td style='text-align:center;' ><span>纬度经度格式/字段分隔器</span></td></tr><tr><td style='text-align:center;' ><span>Output Single if Sol Outage / Max Sol Std (m)</span></td><td style='text-align:center;' ><span>输出单次Sol中断/最大SOL STD(M)</span></td></tr><tr><td style='text-align:center;' ><span>Datum / Height</span></td><td style='text-align:center;' ><span>基准/高度</span></td></tr><tr><td style='text-align:center;' ><span>Geoid Model</span></td><td style='text-align:center;' ><span>大地水准面模型</span></td></tr><tr><td style='text-align:center;' ><span>Solution for Static Mode</span></td><td style='text-align:center;' ><span>静态模式的解决方案</span></td></tr><tr><td style='text-align:center;' ><span>NMEA Interval (s) RMC/GGA, GSA/GSV</span></td><td style='text-align:center;' ><span>NMEA间隔RMC/GGA，GSA/GSV</span></td></tr><tr><td style='text-align:center;' ><span>Output Solution Status / Debug Trace</span></td><td style='text-align:center;' ><span>输出解决方案状态/调试跟踪</span></td></tr></tbody></table></figure><p><strong><span>Positions</span></strong></p><p><img src="Image/image-20220923232424889.png" alt="image-20220923232424889" style="zoom:67%;" /></p><figure><table><thead><tr><th style='text-align:center;' ><span>参数</span></th><th style='text-align:left;' ><span>含义</span></th></tr></thead><tbody><tr><td style='text-align:center;' ><span>Rover</span></td><td style='text-align:left;' ><span>如果流动站天线固定，则设置流动站天线的位置</span></td></tr><tr><td style='text-align:center;' ><span>Antenna Type</span></td><td style='text-align:left;' ><span>选择移动站天线的类型。如果要选择天线类型，需要在（file）中设置接收器天线PCV文件路径。如果使用了（*），表示天线类型和天线增量由RINEX OBS报头（RTKPOST）或RTCM天线信息（RTKNAVI）的天线信息识别。</span></td></tr><tr><td style='text-align:center;' ><span>Delta-E/N/U</span></td><td style='text-align:left;' ><span>将流动站天线的增量位置设置为参考标记（m）的ARP（天线参考点）位置的E\/N\/U偏移。</span></td></tr><tr><td style='text-align:center;' ><span>Base Station</span></td><td style='text-align:left;' ><span>设置基站天线的位置纬度/经度/高度（deg\/m），纬度\经度\高度（度数）/米；纬度\经线\高度（dms/m）；纬度\经纬度\高度度数\分\秒/米；X\/Y\/Z‐ECEF（m）：ECEF框架中的X\/Y\/Z分量；RTCM站位置：使用RTCM消息中包含的天线位置＊‐单点平均值‐位置；使用单点解的平均值‐从位置文件获取：使用位置文件中的位置。通过使用漫游者观测数据文件路径的头4个字符ID搜索站点。-RINEX标题位置：使用应用程序</span></td></tr></tbody></table></figure><p><strong><span>File</span></strong></p><p><img src="Image/image-20220923232759893.png" alt="image-20220923232759893" style="zoom:67%;" /></p><figure><table><thead><tr><th style='text-align:left;' ><span>含义</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>1 如果使用精确星历表或SSR校正，请输入卫星天线PCV（相位中心变化）校正的ANTEX天线参数文件路径。</span></td></tr><tr><td style='text-align:left;' ><span>2 如果应用接收机天线相位中心偏移 和 PCVPCVPCV校正，输入ANTEX或 NGS 类型的天线文件。</span></td></tr><tr><td style='text-align:left;' ><span>3 如果选择外部模型作为大地水准面模型，则输入大地水准面数据文件的文件路径。</span></td></tr><tr><td style='text-align:left;' ><span>4 输入PPP的DCB校正文件路径</span></td></tr><tr><td style='text-align:left;' ><span>5 输入EOP硬件延迟偏差文件的文件路径。EOP数据文件的格式应为IGS ERP格式版本</span></td></tr><tr><td style='text-align:left;' ><span>6 输入OTL潮汐文件的文件路径。OTL系数文件的格式为BLQ格式</span></td></tr><tr><td style='text-align:left;' ><span>7 选择电离层数据文件</span></td></tr></tbody></table></figure><p>&nbsp;</p><h2 id='四rtkpostexe'><span>四、RTKPOST.exe</span></h2><p><strong><span>功能</span></strong></p><p><span>RTKPOST是RTKLIB中比较关键的软件，属于</span><strong><span>后处理模块</span></strong><span>。功能一应俱全，基本能满足所有GNSS数据处理的应用要求，缺点是精度可能不太可靠（与其他高精度科研软件相比）；能够处理RINEX 2.10、2.11、2.12、3.00、3.01、3.02、3.03、3.04观测数据和导航电文(GPS, GLONASS、Galileo、QZSS、BeiDou 、 SBAS),并且包含多种定位方式：Single‐point、 DGPS/DGNSS、 Kinematic、 Static、Moving-Base、Fixed、PPP‐Kinematic 、 PPP‐Static、PPP Fixed（模糊度固定定位）。</span></p><p><strong><span>1、主界面</span></strong></p><p><img src="Image/image-20220924085706739.png" alt="image-20220924085706739" style="zoom:67%;" /></p><p><strong><span>介绍：</span></strong></p><ul><li><span>1： 表示你处理的时段，O、N文件中会有写，一般不用管。</span></li><li><span>2： 表示采样率。</span></li><li><span>4、5、6、8：5表示处理的移动站O文件（观测值文件）；点击 4、6 中“圆盘”会打开RTLPLOT.exe打开观测值文件查看卫星的状态。点击 4 、6、8中的“文本框”会显示观测文件的信息。如下图所示：</span><strong><span>RTLPLOT.exe</span></strong><span>后面做详细的介绍</span></li></ul><p><span>                          </span><img src="Image/image-20220924090912394.png" alt="image-20220924090912394" style="zoom:50%;" /><img src="Image/image-20220924091711281.png" alt="image-20220924091711281" style="zoom: 50%;" /></p><ul><li><span>7 基准站的观测值文件</span></li><li><span>9 、10、11、12：一般为广播星历（N文件）、精密星历（sp3）、精密钟差文件（clk）</span></li><li><span>13 自定义结果文件输出路径。结果文件有三个，最主要的是后缀为.pos的文件，可以用“RTKPLOT”打开成图，也可以用记事本打开，看文字内容。</span></li><li><span>14 表示你生成的结果文件的名字。一般软件默认是移动站O文件的前缀。</span></li><li><span>15 两个方框文本，点了以后看其他两种结果文件的文本内容。</span></li><li><span>16 表示“RTKPLOT”的快捷按钮，当你运算结束后，点16，就会自动用“RTKPLOT”打开你的结果文件“.pos”</span></li><li><span>17 表示“绿底记事本”的快捷按钮，当你运算结束后，点17，就会自动用“绿底记事本”打开你的结果文件“.pos”</span></li><li><span>18 表示运用谷歌地球，在谷歌地球上显示你运算结束后的点，点的位置和过程中的漂移，没试过。</span></li><li><span>19 为“OPTIONS”，最重要的设置，里面包含了许多的参数设置，也是最影响解算结果的设置，</span><strong><span>在上一节RTKNAVI.exe中已经介绍了</span></strong><span>。</span></li><li><span>20 表示开始解算。</span></li><li><span>21 表示退出。</span></li></ul><p><strong><span>2、案例实现（用2.4.2版本的RTKLIB）</span></strong><span>：先实现动态精密定位</span></p><p><span>（1）加载流动站的观测值文件（O\N），基准站的观测值文件（O\N）,流动站的导航电文（nav）。</span></p><p><span>（2）配置参数，如下所示；定位模式：动态定位；频率选择双频的；滤波类型：从前向后滤波计算；卫星系统：常用四大卫星系统；其他参数根据需要自行配置。</span><strong><span>不同的参数配置定位精度可能会不一样，多尝试</span></strong><span>。</span></p><p><img src="Image/image-20220924094134387.png" alt="image-20220924094134387" style="zoom:50%;" /></p><p><span>（3）配置完成后，点击“Execute”解算。Q的大小表示解算结果的好坏，1表是很好，一般大于5就认为错误。橙色的进度条表示解算的进度。解算完成后点击“Plot”和“View”均可查看结算的pos文件信息。</span></p><p><img src="Image/image-20220924093925505.png" alt="image-20220924093925505" style="zoom: 50%;" /></p><p><span>（4）查看pos文件。</span></p><p><img src="Image/image-20220924095734479.png" alt="image-20220924095734479" style="zoom: 50%;" /></p><p>&nbsp;</p><h2 id='五rtkpoltexe'><span>五、RTKPOLT.exe</span></h2><p><strong><span>功能</span></strong></p><p><span>RTKPLOT模块用于使用图像或者图表的方式分析定位解算的水平。我们可以点击rtkplot可执行文件使用该功能，也可以在rtkpost和rtknavi模块中点击plot进入。其界面如下：</span></p><p><span>该博客介绍很详细，欢迎去查看：</span><a href='http://blog.sciencenet.cn/blog-3386358-1137198.html' target='_blank' class='url'>http://blog.sciencenet.cn/blog-3386358-1137198.html</a></p><p><strong><span>1、界面</span></strong></p><p><img src="Image/image-20220924105652015.png" alt="image-20220924105652015" style="zoom: 50%;" /></p><p><span>点击File菜单下的opensolution选项可以加载要显示的解算结果，可以选择rtklib数据处理输出的文件也可以选择NMEA-0183格式的文件。如果文件为空那么会显示接收机地面跟踪轨迹图像。跟踪轨迹的线条、颜色可通过edit选项进行更改。在窗口的下方会显示解算历元的个数、基线长度等信息。</span></p><p><img src="Image/image-20220924105723881.png" alt="image-20220924105723881" style="zoom: 50%;" /></p><p><span>点击file菜单下的open map image选项我们可以打开一个图片作为gnd trk图像的背景。图像可以通过edit菜单进行设置以适应窗口。</span></p><p><img src="Image/image-20220924105810530.png" alt="image-20220924105810530" style="zoom:50%;" /></p><p>&nbsp;</p><p><span>菜单栏中的第一个下选框用来选择图像的类型，包含：轨迹跟踪图，接收机坐标在E/N/U方向的分量，接收机速度和加速度在E/N/U方向的分量，在这些图像上，我们滚动鼠标滚轮可以改变坐标系的尺度，还可以选择是否显示跟踪轨迹，坐标系中心及地图的网格线。</span></p><p><strong><span>轨迹跟踪图</span></strong></p><p><img src="Image/image-20220924105856967.png" alt="image-20220924105856967" style="zoom:50%;" /></p><p><strong><span>接收机坐标在E/N/U方向的分量，接收机速度和加速度在E/N/U方向的分量</span></strong></p><p><img src="Image/image-20220924105928700.png" alt="image-20220924105928700" style="zoom:50%;" /></p><p>&nbsp;</p><p><span>并且我们可以选择Nsat图像类型用于显示可见的卫星、通过研究差分改正信息的讯龄，从而分析了定位误差的时间相关性、模糊度检验的ratio因子。如果我们在定位解算时选择输出文件中输出定位坐标残差，我们还可以选择Residuals图来查看随历元变化的坐标三个分量的残差值。并且我们可以选择显示的卫星频点，选择单个卫星还是全部卫星。在残差图中红色的线代表了周跳。还可以显示伪距残差、载波相位残差、截止高度角和信号强度的变化。</span></p><p><strong><span>残差图</span></strong></p><p><img src="Image/image-20220924110038955.png" alt="image-20220924110038955" style="zoom:50%;" /></p><p><span>本模块还支持引入google map和google earth的图像，可通过view菜单下的选项来选择。并且我们可以利用google map和google earth工具对图像进行修改。</span></p><p><span>若想显示多幅图像我们可以选择file下的open solution2选项来产生另一幅图像。并可以点击图像窗口中的1、2来改变当前显示的图像，我们可以通过edit下的Time Span/Interval选项来选择显示需要的图像时间段及点的采样间隔。并且可以通过Solution Source选项查看这些样点的信息日志。</span></p><p>&nbsp;</p><p>&nbsp;</p><p><span>除了上述可通过rtkplo查看定位解算的分析结果之外，我们还可以用此工具查看原始的</span><strong><span>观测文件</span></strong><span>。可通过File下的Open Obs Data打开RINEX observation和navigation信息文件。打开原始观测和导航数据我们可以选择skyplot图和visible satellites图来查看可视卫星变化情况，选择DOP/NSat plot、SNR/Multipath/Elevation plot (SNR/MP/EL) 和SNR/Multipath ‐ EL plot (SNR/MP‐EL).图，elevation图来查看相应的信噪比和截止高度角变化图。</span></p><p><img src="Image/image-20220924111349847.png" alt="image-20220924111349847" style="zoom:67%;" /></p><p><span>如果要查看相应的原始观测文件我们可以选择ʺEditʺ 下的ʺObs Data Sourceʺ或 ʺObs Data QC”。</span></p><p><img src="Image/image-20220924111438804.png" alt="image-20220924111438804" style="zoom: 67%;" /></p><p><span>我们可以预测GNSS卫星的可见性，步骤为在ʺOptionsʺ下的选择ʺReceiver Positionʺ to ʺLat/Lon/Hgtʺ. 接着执行ʺFileʺ ‐ ʺVisibilityAnalysis...ʺ, 这样我们就可以进行分析时间的选择 ʺTime Span/Intervalʺ 。</span></p><p><img src="Image/image-20220924111653740.png" alt="image-20220924111653740" style="zoom:80%;" /></p><h2 id='六strsvrexe'><span>六、STRSVR.exe</span></h2><p><strong><span>功能</span></strong></p><p><span>STRSVR是一款支持串口、FTP 、 HTTP、 TCP客户端/服务器模式、文件、NTRIP协议的网络互传辅助工具。STRSVR模块功能强大全面，简单易用，使用后可以帮助用户更轻松便捷的进行服务器互传操作。软件用于设置远程服务器并在远程服务器上进行转发，数据转发的操作非常方便。</span></p><p><strong><span>1、界面</span></strong></p><p><img src="Image/image-20220924112854050.png" alt="image-20220924112854050" style="zoom:67%;" /></p><figure><table><thead><tr><th><span>类型</span></th><th><span>简介</span></th></tr></thead><tbody><tr><td><span>Serial</span></td><td><span>从接收机通过硬件传输至网络输出原始数据</span></td></tr><tr><td><span>TCP Client</span></td><td><span>主动角色，发送连接请求，等待服务器的响应</span></td></tr><tr><td><span>TCP Server</span></td><td><span>等待来自客户端的连接请求，处理请求并回传结果</span></td></tr><tr><td><span>Ntrip Client</span></td><td><span>登录Ntrip Caster获取RTCM数据</span></td></tr><tr><td><span>UDP Server</span></td><td><span>与TCP协议一样，它只支持UDP的服务框架，同步多进程模型传输数据</span></td></tr><tr><td><span>File</span></td><td><span>以文件形式输入数据</span></td></tr></tbody></table></figure><p><strong><span>2、案例实现</span></strong></p><p><span>（1）打开STRSVR.exe，在Input栏中可选择TCP Cient，并在Opt选项中进行配置信息。</span></p><p><img src="Image/image-20220924113828824.png" alt="image-20220924113828824" style="zoom:67%;" /></p><p><span>（2）Server Address输入服务器地址，Port输入端口。</span></p><p><span>（3）如下图，可以在远程服务器中自行查看各监测站的数据收发情况</span></p><p><img src="Image/image-20220924114139382.png" alt="image-20220924114139382" style="zoom: 50%;" /></p><p><span>当Output为橙色时，代表未接入该端口数据流，当Output为绿色时，则成功接入数据。（均可在服务器上的STRSVR查看）</span></p><p><img src="Image/image-20220924114216625.png" alt="image-20220924114216625" style="zoom:50%;" /></p><p>&nbsp;</p><p><span>（4）设置完成即可start进行实时接收数据。</span></p><p><span>此时状态为TCP 协议接收数据，以文件的形式存储到本地</span></p><p><img src="Image/image-20220924114720082.png" alt="image-20220924114720082" style="zoom: 67%;" /></p><p>&nbsp;</p><p><span>（5）数据存储</span></p><ul><li><p><span>output-&gt;type选择File，点开Opt</span></p></li><li><p><span>Opt中swap intv表示可选的时间间隔，单位是小时，比如选择每24h存储一个文件，即将测站实时流数据每24小时存成一个文件</span></p><p><img src="Image/image-20220924115027803.png" alt="image-20220924115027803" style="zoom:67%;" /></p></li><li><p><span>点开Output File path后面的问号，弹出下面的窗体，表示在文件命名中可以替代的关键字，比如我将文件名命名为%Y%m%d%hstation1，则输出的文件名自动生成为2021081300station1。当再过24小时之后，会生成新的文件名为2021081400station1。</span></p></li></ul><p><img src="Image/image-20220924115114280.png" alt="image-20220924115114280" style="zoom: 50%;" /></p><p><strong><span>注意</span></strong></p><p><span>1）时间是以UTC时间表示的，和北京时间差8小时。</span></p><p><span>2）每次储存起点从0时起，第一个文件不从0时开始的话就存到当天23:59:59，再从0时存储。</span></p><ul><li><p><span>下图为实时数据接收并输出界面，绿色且有字节变化，即代表正常运行，若Input为绿色但无数据传输，原因是地址或端口输入错误，检查重新start即可。</span></p><p><img src="Image/image-20220924115300699.png" alt="image-20220924115300699" style="zoom: 50%;" /></p></li></ul><p>&nbsp;</p><ul><li><span>在实时接收数据过程中，可点击左下方小框，可监视数据流的信息状态</span></li></ul><p><span>                                           </span><img src="Image/image-20220924115545612.png" alt="image-20220924115545612" style="zoom:50%;" /><img src="Image/image-20220924115554712.png" alt="image-20220924115554712" style="zoom:50%;" /></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><h2 id='七rtkgetexe'><span>七、RTKGET.exe</span></h2><p><strong><span>功能</span></strong></p><p><span>GNSS数据下载模块，对于</span><strong><span>PPP定位</span></strong><span>，需要在IGS网站下载</span><strong><span>精密星历、钟差</span></strong><span>等产品；另一方面，你也可以在网络上下载存储在网络上的，关于CORS站的观测/导航数据等。利用此模块可直接进行需要下载。</span></p><p><strong><span>1、界面</span></strong></p><p><img src="Image/image-20220924115815130.png" alt="image-20220924115815130" style="zoom:67%;" /></p><p><strong><span>2、案例实现</span></strong><span>（比如选择IGS数据中心下载AMC2站点的观测数据（obs））</span></p><p><span>（1）设置好所需的时间段</span></p><p><span>（2）点击Options进行设置，将URL_LIST.txt 加载进来</span></p><p><img src="Image/image-20220924120526093.png" alt="image-20220924120526093" style="zoom:50%;" /></p><p><span>（3）输入站点AMC2，我们可以选择想要下载的的数据类型（obs）：</span></p><ul><li><span>主要用到了OBS(观察值文件，包含了伪距和载波);NAV(导航电文数据),EPH(精密轨道)；ATX(天线文件);CLK(精密钟差),</span></li></ul><p><img src="Image/image-20220924120612003.png" alt="image-20220924120612003" style="zoom:50%;" /></p><p><span>（4）然后Download，就可以下载成功，不过我们一般不使用这个方法。主要是下载速度慢，一个是每次选择都比较麻烦；我们可以使用FTP进行下载。</span></p><p><img src="Image/image-20220924121130215.png" alt="image-20220924121130215" style="zoom:50%;" /></p><p><img src="Image/image-20220924121535632.png" alt="image-20220924121535632" style="zoom:50%;" /></p><p><strong><span>注意：</span></strong></p><p><span>GPST:GPS时间</span>
+<span>UTC:美国时间</span>
+<span>GPS WEEK； GPS开始以后经过了多少周</span>
+<span>GPS Time：在这一周的多少秒</span>
+<span>day of year：这一年的第几天</span>
+<span>Day of week: 这一周的第几天</span>
+<span>Time of day： 这一天的第几秒</span>
+<span>leap seconds：跳秒</span></p><p><img src="Image/image-20220924121219718.png" referrerpolicy="no-referrer" alt="image-20220924121219718"></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div></div>
+</body>
+</html>
