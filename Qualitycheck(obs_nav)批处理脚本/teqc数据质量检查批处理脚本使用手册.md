@@ -1,0 +1,252 @@
+[TOC]
+
+# teqc数据质量检查批处理脚本使用手册
+
+## 一、说明
+
+`qualitycheck_2.py `脚本是一个批量进行 RINEX 数据质量分析的脚本，通过在命令行调用 TEQC 程序对输入观测数据处理，质量分析，输出观测时长、信噪比、多路径效应、周跳等质量检查成果。
+
+## 二、功能
+
+我们知道TEQC分有**qc2lite（该模式下无数据完整率）和qc2full（有数据完整率）**两种检核方式。该脚本的功能实现是`qc2full`处理模式的批处理：即利用观测值文件和导航电文才能实现观测数据质量检查，并输出检查结果。
+
+* 输入：观测值文件和导航电文的文件夹名称
+* 输出：文件名称、时期、时间、时长、完整率、信噪比、多路径效应、周跳
+* 输出模式：命令行输出、文件输出（只支持*.txt）
+
+## 三、运行环境
+
+由于本程序的质量分析操作依赖于 TEQC 程序，但是因不同版本的 TEQC 的输出信息格式有略微不同，本脚本保证只要teqc数据输出形式不变的情况下，在使用 2019 及以后版本的 TEQC 时测试都能通过。
+
+对于 Windows 10、Windows 7 等操作系统，需保证运行脚本的文件夹内有 TEQC 程序，否则可能出现 teqc 不是内部或外部命令，也不是可运行的程序或批处理文件。” 的错误。
+
+## 四、参数说明
+
+该脚本在执行时有四个参数：
+
+```
+PS $ python qualitycheck_2.py -nav <folder_name> -obs <folder_name> [-out <format> -fn <filename>]
+```
+
+* `-nav` ：导航电文；<folder_name>导航电文的文件夹名称。
+
+* `-obs`：观测文件；<folder_name>观测数据所在的文件夹名称。
+
+* `-out`：只有在要输出为文本文件时使用；<format>为 `t` 或 `table` 时为表格形式。
+
+* `-fn`：<filename>输出文件名称（*.txt）
+
+  注意：只有在使用`-out`后才能使用`-fn`
+
+## 五、使用实例
+
+数据准备：有观测数据文件夹`obs`，导航电文文件夹`nav`；**注意：要保证两个文件的文件要一一对应。**
+
+<img src="file.png" alt="file" style="zoom:67%;" />
+
+| obs          | nav          |
+| ------------ | ------------ |
+| bjfs0020.22o | brdc0020.22n |
+| bjfs0030.22o | brdc0030.22n |
+| bjfs0040.22o | brdc0040.22n |
+| .......      | .......      |
+
+<img src="nav_obs.png" alt="nav_obs" style="zoom:50%;" />
+
+### 1、命令行输出结果
+
+```
+PS D:\TEQC\obs_check> python qualitycheck_2.py -nav nav -obs obs
+```
+
+<img src="shell.png" alt="shell" style="zoom:50%;" />
+
+### 2、文本文件输出
+
+```
+PS D:\TEQC\obs_check> python qualitycheck_2.py -nav nav -obs obs -out t -fn 20221016result.txt
+```
+
+**注意：在当前的文件夹下会生成一个`20221016result.txt`的文件。**
+
+<img src="result——txt.png" alt="result——txt" style="zoom:50%;" />
+
+## 六、注意事项
+
+### 1、脚本存在的问题
+
+不管采用哪种输出模式，只要脚本顺利运行了，就会产生一系列对应的**质量汇总文件(*.S)**，这些文件默认在**观测值文件夹目录下**，若需要进行二次运行脚本需要将这些（*.S）文件移除，否则会报错，甚至得到错误的结果。
+
+### 2、注意事项
+
+* 使用了`-nav`就必须要搭配`-fn`。
+* `-fn`有默认的文件夹名称，如果`-fn`后未接文件名，会采用默认的`result.txt`的文件名
+* 一定要保证观测值文件夹的文件与导航电文文件夹的文件一致。
+
+
+
+## 七、脚本代码（qualitycheck_2.py）
+
+```
+#Quality check for RINEX observation files using TEQC software.
+#python3.8
+#lijun
+import argparse
+import os,sys
+import glob
+from concurrent import futures
+import datetime
+import subprocess
+
+check_information = \
+(
+    {'name': 'start', 'flag': 'Time of start of window :', 'pos': slice(25, 51)},
+    {'name': 'end', 'flag': 'Time of  end  of window :', 'pos': slice(37, 51)},
+    {'name': 'length', 'flag': 'Time line window length :', 'pos': slice(26, 42)},
+    {'name': 'MP1', 'flag': 'Moving average MP12     :', 'pos': slice(26, 32)},
+    {'name': 'MP2', 'flag': 'Moving average MP21     :', 'pos': slice(26, 32)},
+    {'name': 'SN1', 'flag': 'Mean S1                 :', 'pos': slice(26, 31)},
+    {'name': 'SN2', 'flag': 'Mean S2                 :', 'pos': slice(26, 31)}
+)
+#slice(start,end)从已有数组中返回选定的元素，返回一个新数组，包含从start到end（不包含该元素）的数组元素
+# 定义命令行中的参数
+def get_args():
+    parser = argparse.ArgumentParser(description="quality check of using TEQC") #创建解释器-创建ArgumentParser()的对象parser
+    parser.add_argument('-nav',type=str,metavar='<nav_files>',                  #通过add_argument添加参数nav
+                        default='',help="Navigation files for complete mode")
+    parser.add_argument('-obs',type=str,metavar='<obs_files>',                  #通过add_argument添加参数obs
+                        default='', help="Observition files for complete mode" )
+    parser.add_argument('-out',metavar='<format>',                              #通过add_argument添加参数out
+                        choices=['table','t'],help="Out format to txt or screen")
+    parser.add_argument('-fn',type=str,metavar='<filename>',                    #通过add_argument添加参数fn
+                        default='result.txt',help="Custom file name")
+    args=parser.parse_args()                                                    #命令行参数解析parser.parse_args()
+    return args
+
+#根据返回的参数获取文件并遍历存储
+def get_files():
+    global count                                 # 定义局部的全局变量
+    args = get_args()
+
+    nav_fn, obs_fn = args.nav, args.obs          # 获取文件夹名称
+    out_format, out_fn = args.out, args.fn       # 获取输出形式和文件名
+
+    path = os.getcwd()
+    path_nav = os.path.join( path,nav_fn )       # 将当前路径与文件夹拼接（如'D:\\PycharmProjects\\nav'）
+    path_obs = os.path.join( path,obs_fn )
+
+    filename_nav=os.listdir(path_nav)            # 遍历文件夹下的文件,存储为列表
+    filename_obs=os.listdir (path_obs)
+
+    obs_count = len(filename_obs)                # 获取文件数量
+    nav_count = len(filename_nav)
+    #异常处理
+    try:
+        if obs_count == nav_count:
+            count=obs_count
+    except:
+        print ( "|-----Tips:The number of obs does not equal the number of nav-----|\n"
+                "|-----The process is about to terminate----|" )
+        sys.exit ( 0 )
+
+    return nav_fn,obs_fn,filename_nav,filename_obs,count,out_format,out_fn
+
+#
+def quality_check(nav_file,obs_file):
+    args='teqc','+qc','-nav',nav_file,obs_file
+    status,output=subprocess.getstatusoutput(' '.join(args))
+    #print('status=',status)
+    #print('output=',output)
+    if status > 0:
+        out = None
+    else:
+        out = output.split('\n')
+    return out
+
+
+def parallel_teqc():
+    nav_fn,obs_fn,nav_file0, obs_file0, num, out_fmt,out_fn0=get_files ()
+    #nav_fn,obs_fn文件夹名（brdc，bjfs）；nav_file, obs_file文件名(1.11n,1.11o)
+    if out_fmt in ['t','table']:
+        f=open ( out_fn0, mode='a+', encoding='utf-8' )
+        header=print_header ()
+        f.write (header+'\n')
+        f.close ()
+    else:
+        print ( 'num=', num )
+        print ( print_header () )
+    # 线程池中创建最多执行1个线程，同时通过ThreadPoolExecutor来生成一个executor对象
+    with futures.ThreadPoolExecutor(max_workers=1) as executor:
+
+        for i in range(num):
+            # 路径拼接(如：obs/bfdc1530.11n)
+            path_nav_file=nav_fn+'/'+nav_file0[i]
+            path_obs_file=obs_fn+'/'+obs_file0[i]
+            # 调用executor对象的submit方法，提交1个任务
+            future = executor.submit(quality_check,path_nav_file,path_obs_file)
+            # 调用Future对象的result方法，返回被执行函数的结果
+            res=future.result ()
+            if res:
+                record=parse_report(res)
+                results=str(obs_file0[i])+str(record)
+                res_0=results.replace("('",' ').replace("', '",' ').replace("', ",' ').replace(", '",' ')
+                res=res_0.replace(' ','  ').replace("')",'\n')
+
+                if out_fmt in ['t','table']:
+                    f=open ( out_fn0, mode='a+', encoding='utf-8' )
+                    f.write ( res )
+                    f.close ()
+                else:
+                    print ( res )
+
+# 从报表中获取需要的参数
+def parse_report(report):
+    marks = {}
+    for item in check_information:
+        for line in report:
+            if item['flag'] in line:
+                marks[item['name']] = line[item['pos']].strip()
+                break
+
+    # 获取字典中对应键的值
+    sn1 = format(float(marks.get('SN1', 'nan')),'.2f')
+    sn2 = format(float(marks.get('SN2', 'nan')),'.2f')
+    mp1 = format(float(marks.get('MP1', 'nan')),'.2f')
+    mp2 = format(float(marks.get('MP2', 'nan')),'.2f')
+    date = datetime.datetime.strptime(marks['start'][0:11], '%Y %b %d')
+    start = marks['start'][11:].strip()
+    end = marks['end']
+
+    last_line = next(l for l in reversed(report) if l.startswith('SUM'))
+    last_line_pieces = last_line.split()
+    length = float(last_line_pieces[-8])
+
+    # Get the percentage of data, maybe unknown
+    percentage = last_line_pieces[-4]
+    if percentage == '-':
+        percentage = float('nan')
+    else:
+        percentage = format(float(percentage),'.2f')
+
+    # Get CSR from the last line of report, the olps may equal 0
+    olps =round(float(last_line_pieces[-1]),0)
+    if olps == 0:
+        csr = float ( 'nan' )
+    else:
+        csr = format(1000 / olps,'.3f')
+    result = (date.strftime('%Y-%m-%d'), start, end, length, percentage, sn1,
+              sn2, mp1, mp2, olps, csr)
+    return result
+
+# 打印表头
+def print_header():
+    header=('file', 'date', 'start', 'end', 'hours', 'percent',
+            'SN1', 'SN2', 'MP1', 'MP2', 'olsp' ,'CSR')
+    style=('\n{0: ^14s} {1: ^12s} {2: ^14s} {3: ^14s} {4: >6s}  {5: >7s}'
+           '{6: >6s}  {7: >6s}  {8: >6s}  {9: >5s}  {10: >5s} {11: >5s}')
+    format=style.format ( *header )
+    return format
+
+if __name__ == '__main__':
+    parallel_teqc()
+```
